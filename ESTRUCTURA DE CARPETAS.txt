@@ -22,6 +22,7 @@ CHEMLIQ_BACK/
 │   │
 │   ├── models/                  # Modelos ORM (SQLAlchemy)
 │   │   ├── __init__.py
+│   │   ├── audit_log.py
 │   │   ├── empresa.py
 │   │   ├── rol_permission.py
 │   │   └── rol.py
