@@ -23,8 +23,10 @@ CHEMLIQ_BACK/
 │   ├── models/                  # Modelos ORM (SQLAlchemy)
 │   │   ├── __init__.py
 │   │   ├── empresa.py
-│   │   ├── usuario.py
+│   │   ├── rol_permission.py
 │   │   └── rol.py
+│   │   ├── usuario.py
+│   │   └── usuario_rol.py
 │   │
 │   ├── schemas/                 # Pydantic (validación de datos)
 │   │   ├── __init__.py
