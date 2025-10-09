@@ -1,6 +1,6 @@
 # app/main.py
 from fastapi import FastAPI
-from app.api import auth, empresas
+from app.api import auth, empresas, roles 
 
 app = FastAPI(
     title="CHEMLIQ API",
@@ -8,7 +8,11 @@ app = FastAPI(
     description="API para el sistema CHEMLIQ"
 )
 
+# =========================
+# RUTAS PRINCIPALES
+# =========================
 app.include_router(auth.router)
 app.include_router(empresas.router)
+app.include_router(roles.router) 
 
 #comando para ejecutar main --- uvicorn app.main:app --reload
