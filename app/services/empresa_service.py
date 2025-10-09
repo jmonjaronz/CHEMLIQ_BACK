@@ -8,16 +8,20 @@ from app.schemas.empresa import EmpresaCreate, EmpresaUpdate
 # CRUD EMPRESAS
 # =========================
 
-def get_empresas(db: Session):
+def get_empresas(db: Session, incluir_inactivas: bool = False):
     """
-    Retorna todas las empresas activas.
+    Retorna empresas activas por defecto.
+    Si incluir_inactivas=True, retorna todas.
     """
-    return db.execute(select(Empresa).order_by(Empresa.empresa_id)).scalars().all()
+    query = select(Empresa)
+    if not incluir_inactivas:
+        query = query.where(Empresa.activo == "Y")
+    return db.execute(query.order_by(Empresa.empresa_id)).scalars().all()
 
 
 def get_empresa_by_id(db: Session, empresa_id: int):
     """
-    Retorna una empresa por su ID.
+    Retorna una empresa por su ID (activa o inactiva).
     """
     return db.get(Empresa, empresa_id)
 
@@ -42,7 +46,7 @@ def create_empresa(db: Session, empresa_in: EmpresaCreate):
 
 def update_empresa(db: Session, empresa_id: int, empresa_in: EmpresaUpdate):
     """
-    Actualiza los datos de una empresa existente.
+    Actualiza los datos de una empresa existente (activa o inactiva).
     """
     empresa = db.get(Empresa, empresa_id)
     if not empresa:
