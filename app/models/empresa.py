@@ -1,5 +1,5 @@
 #app/models/empresa.py
-from sqlalchemy import Column, Integer, String, Numeric, CLOB, TIMESTAMP, CheckConstraint
+from sqlalchemy import Column, Integer, String, Numeric, CLOB, TIMESTAMP, CheckConstraint, text
 from app.db.base import Base
 
 class Empresa(Base):
@@ -9,10 +9,10 @@ class Empresa(Base):
     ruc = Column(String(11), nullable=False, unique=True)
     nombre = Column(String(250), nullable=False)
     direccion = Column(String(400))
-    config_igv_porcent = Column(Numeric(5, 2), default=18)
-    config_documento_elect = Column(CLOB)
-    creado_en = Column(TIMESTAMP)
-    activo = Column(String(1), default="Y")
+    config_igv_porcent = Column(Numeric(5, 2), server_default="18")
+    config_documento_elect = Column(CLOB)  # JSON config de facturación electrónica
+    creado_en = Column(TIMESTAMP, server_default=text("CURRENT_TIMESTAMP"))
+    activo = Column(String(1), server_default="Y", nullable=False)
 
     __table_args__ = (
         CheckConstraint("activo IN ('Y','N')", name="ck_empresas_activo"),

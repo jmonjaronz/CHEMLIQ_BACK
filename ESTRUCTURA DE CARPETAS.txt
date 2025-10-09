@@ -5,48 +5,53 @@ CHEMLIQ_BACK/
 │   │
 │   ├── api/                    # Rutas (endpoints)
 │   │   ├── __init__.py
-│   │   ├── auth.py              # /auth/login, /auth/register
-│   │   ├── usuarios.py          # CRUD de usuarios
-│   │   └── empresas.py          # CRUD de empresas
+│   │   ├── auth.py             # /auth/login, /auth/register
+│   │   ├── usuarios.py         # CRUD de usuarios
+│   │   └── empresas.py         # CRUD de empresas
 │   │
 │   ├── core/                   # Configuración central
 │   │   ├── __init__.py
-│   │   ├── config.py            # Variables de entorno, settings
-│   │   ├── security.py          # Manejo JWT, hashing de passwords
+│   │   ├── config.py           # Variables de entorno, settings
+│   │   ├── security.py         # Manejo JWT, hashing de passwords
 │   │
 │   ├── db/                     # Base de datos
 │   │   ├── __init__.py
-│   │   ├── base.py              # Base declarativa SQLAlchemy
-│   │   ├── session.py           # Conexión a la BD
-│   │   └── init_db.py           # Carga de datos iniciales
+│   │   ├── base.py             # Base declarativa SQLAlchemy
+│   │   ├── session.py          # Conexión a la BD
+│   │   └── init_db.py          # Carga de datos iniciales
 │   │
-│   ├── models/                  # Modelos ORM (SQLAlchemy)
+│   ├── models/                 # Modelos ORM (SQLAlchemy)
 │   │   ├── __init__.py
-│   │   ├── audit_log.py
+│   │   ├── audit_log.py        # Modelo de auditoría
 │   │   ├── empresa.py
 │   │   ├── rol_permission.py
-│   │   └── rol.py
+│   │   ├── rol.py
 │   │   ├── usuario.py
 │   │   └── usuario_rol.py
 │   │
-│   ├── schemas/                 # Pydantic (validación de datos)
+│   ├── schemas/                # Pydantic (validación de datos)
 │   │   ├── __init__.py
-│   │   ├── auth.py              # Esquemas para login/register
-│   │   ├── usuario.py
-│   │   └── empresa.py
+│   │   ├── auth.py             # Esquemas para login/register
+│   │   ├── usuario.py          # CRUD/response de usuario
+│   │   ├── empresa.py          # CRUD/response de empresa
+│   │   ├── rol.py              # Esquemas de rol
+│   │   ├── rol_permission.py   # Esquemas de permisos de rol
+│   │   ├── usuario_rol.py      # Esquemas de asignación de roles a usuarios
+│   │   └── audit_log.py        # Esquemas para auditoría (opcional)
 │   │
-│   ├── services/                # Lógica de negocio
+│   ├── services/               # Lógica de negocio
 │   │   ├── __init__.py
-│   │   ├── auth_service.py
-│   │   └── usuario_service.py
+│   │   ├── auth_service.py     # Login, registro, JWT
+│   │   └── usuario_service.py  # CRUD y lógica de usuarios
 │   │
-│   └── utils/                   # Funciones utilitarias
+│   └── utils/                  # Funciones utilitarias
 │       ├── __init__.py
-│       └── hashing.py           # Hashear/verificar contraseñas
+│       └── hashing.py          # Hashear/verificar contraseñas
 │
 ├── tests/                       # Pruebas unitarias
 │   ├── __init__.py
-│   └── test_auth.py
+│   ├── test_auth.py
+│   └── test_usuarios.py         # Opcional: pruebas de CRUD de usuarios
 │
 ├── venv/                        # Entorno virtual (no se sube a git)
 │
