@@ -1,9 +1,9 @@
-# app/core/security.py
+#app/core/security.py
 from datetime import datetime, timedelta
 from typing import Optional
 from jose import JWTError, jwt
 from app.core.config import settings
-from app.utils.hashing import verify_password, hash_password
+from app.utils.hashing import hash_password, verify_password  # ✅ Reutilizamos directamente
 
 # =========================
 # JWT
@@ -18,6 +18,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
     return encoded_jwt
 
+
 def verify_access_token(token: str):
     """
     Verifica un JWT y devuelve el payload si es válido.
@@ -28,8 +29,9 @@ def verify_access_token(token: str):
     except JWTError:
         return None
 
+
 # =========================
-# Passwords
+# Passwords (reexportadas)
 # =========================
 def get_password_hash(password: str) -> str:
     """
@@ -37,8 +39,9 @@ def get_password_hash(password: str) -> str:
     """
     return hash_password(password)
 
+
 def verify_user_password(plain_password: str, hashed_password: str) -> bool:
     """
-    Verifica un password plano contra su hash.
+    Verifica un password plano contra su hash (reutilizando utils/hashing.py).
     """
     return verify_password(plain_password, hashed_password)

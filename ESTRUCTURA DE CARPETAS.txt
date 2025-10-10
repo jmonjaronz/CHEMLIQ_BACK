@@ -1,60 +1,65 @@
 CHEMLIQ_BACK/
 │── app/
 │   ├── __init__.py
-│   ├── main.py                 # Punto de entrada FastAPI
+│   ├── main.py                        # Punto de entrada FastAPI
 │   │
-│   ├── api/                    # Rutas (endpoints)
+│   ├── api/                           # Rutas (endpoints)
 │   │   ├── __init__.py
-│   │   ├── auth.py             # /auth/login, /auth/register
-│   │   ├── usuarios.py         # CRUD de usuarios
-│   │   └── empresas.py         # CRUD de empresas
+│   │   ├── auth.py                    # /auth/login, /auth/register
+│   │   ├── usuarios.py                # CRUD de usuarios
+│   │   ├── empresas.py                # CRUD de empresas
+│   │   └── roles.py                   # CRUD de roles (globales y empresariales)
 │   │
-│   ├── core/                   # Configuración central
+│   ├── core/                          # Configuración central
 │   │   ├── __init__.py
-│   │   ├── config.py           # Variables de entorno, settings
-│   │   ├── security.py         # Manejo JWT, hashing de passwords
+│   │   ├── config.py                  # Variables de entorno, settings
+│   │   ├── security.py                # Manejo JWT, hashing de passwords
 │   │
-│   ├── db/                     # Base de datos
+│   ├── db/                            # Base de datos
 │   │   ├── __init__.py
-│   │   ├── base.py             # Base declarativa SQLAlchemy
-│   │   ├── session.py          # Conexión a la BD
-│   │   └── init_db.py          # Carga de datos iniciales
+│   │   ├── base.py                    # Base declarativa SQLAlchemy
+│   │   ├── session.py                 # Conexión a la BD
+│   │   └── init_db.py                 # Carga de datos iniciales (ej: roles base)
 │   │
-│   ├── models/                 # Modelos ORM (SQLAlchemy)
+│   ├── models/                        # Modelos ORM (SQLAlchemy)
 │   │   ├── __init__.py
-│   │   ├── audit_log.py        # Modelo de auditoría
-│   │   ├── empresa.py
-│   │   ├── rol_permission.py
-│   │   ├── rol.py
-│   │   ├── usuario.py
-│   │   └── usuario_rol.py
+│   │   ├── audit_log.py               # (Opcional) registro de auditoría
+│   │   ├── empresa.py                 # Modelo Empresa
+│   │   ├── rol.py                     # Modelo Rol
+│   │   ├── rol_permission.py          # Modelo de permisos por rol
+│   │   ├── usuario.py                 # Modelo Usuario
+│   │   ├── usuario_rol.py             # Relación Usuario ↔ Rol
+│   │   └── __init__.py
 │   │
-│   ├── schemas/                # Pydantic (validación de datos)
+│   ├── schemas/                       # Esquemas Pydantic (entrada/salida)
 │   │   ├── __init__.py
-│   │   ├── auth.py             # Esquemas para login/register
-│   │   ├── usuario.py          # CRUD/response de usuario
-│   │   ├── empresa.py          # CRUD/response de empresa
-│   │   ├── rol.py              # Esquemas de rol
-│   │   ├── rol_permission.py   # Esquemas de permisos de rol
-│   │   ├── usuario_rol.py      # Esquemas de asignación de roles a usuarios
-│   │   └── audit_log.py        # Esquemas para auditoría (opcional)
+│   │   ├── auth.py                    # Esquemas para login/register
+│   │   ├── usuario.py                 # CRUD/response de usuario
+│   │   ├── empresa.py                 # CRUD/response de empresa
+│   │   ├── rol.py                     # CRUD/response de rol
+│   │   ├── rol_permission.py          # Esquemas de permisos de rol
+│   │   ├── usuario_rol.py             # Esquemas de asignación de roles a usuarios
+│   │   └── audit_log.py               # (Opcional) auditoría
 │   │
-│   ├── services/               # Lógica de negocio
+│   ├── services/                      # Lógica de negocio / capa intermedia
 │   │   ├── __init__.py
-│   │   ├── auth_service.py     # Login, registro, JWT
-│   │   └── usuario_service.py  # CRUD y lógica de usuarios
+│   │   ├── auth_service.py            # Login, registro, JWT
+│   │   ├── empresa_service.py         # CRUD de empresas
+│   │   ├── rol_service.py             # CRUD de roles (globales/empresa)
+│   │   └── usuario_service.py         # CRUD y lógica de usuarios
 │   │
-│   └── utils/                  # Funciones utilitarias
+│   └── utils/                         # Funciones auxiliares
 │       ├── __init__.py
-│       └── hashing.py          # Hashear/verificar contraseñas
+│       └── hashing.py                 # Hashear/verificar contraseñas
 │
-├── tests/                       # Pruebas unitarias
+├── tests/                             # Pruebas unitarias
 │   ├── __init__.py
 │   ├── test_auth.py
-│   └── test_usuarios.py         # Opcional: pruebas de CRUD de usuarios
+│   ├── test_empresas.py               # (Nuevo) pruebas CRUD de empresas
+│   └── test_roles.py                  # (Nuevo) pruebas CRUD de roles
 │
-├── venv/                        # Entorno virtual (no se sube a git)
+├── venv/                              # Entorno virtual (excluido del repositorio)
 │
-├── .env                         # Variables de entorno (DB_URL, SECRET_KEY, etc.)
-├── requirements.txt             # Dependencias del proyecto
-└── README.md
+├── .env                               # Variables de entorno (DB_URL, SECRET_KEY, etc.)
+├── requirements.txt                   # Dependencias del proyecto
+└── README.md                          # Documentación del backend

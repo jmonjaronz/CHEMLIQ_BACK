@@ -8,16 +8,17 @@ class UsuarioBase(BaseModel):
     activo: Optional[str] = "Y"
 
 class UsuarioCreate(UsuarioBase):
-    password: str  # necesario solo al crear
+    password: str  # ← no se devuelve nunca
+    empresa_id: int  # ← obligatorio
 
 class UsuarioUpdate(BaseModel):
-    nombre: Optional[str]
-    activo: Optional[str]
+    nombre: Optional[str] = None
+    activo: Optional[str] = None
 
 class UsuarioResponse(UsuarioBase):
     usuario_id: int
     empresa_id: int
-    roles: Optional[List[str]] = []
+    roles: Optional[List[str]] = []  # luego puede cambiar a List[RolResponse]
 
     class Config:
         orm_mode = True
