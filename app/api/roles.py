@@ -45,17 +45,21 @@ def crear_rol(
     nombre: str = Form(..., description="Nombre del rol"),
     descripcion: Optional[str] = Form(None, description="Descripción del rol"),
     es_predefinido: Optional[str] = Form("N", description="Indica si el rol es predefinido (Y/N)"),
-    empresa_id: Optional[int] = Form(None, description="ID de la empresa (nulo si es global)"),
+    empresa_id: Optional[str] = Form(None, description="ID de la empresa (nulo si es global)"),
     db: Session = Depends(get_db)
 ):
     """
     Crea un nuevo rol (global o empresarial).
     """
+
+    # Manejo de empresa_id vacío o nulo
+    empresa_id_int = int(empresa_id) if empresa_id not in (None, "", "null") else None
+
     rol_in = RolCreate(
         nombre=nombre,
         descripcion=descripcion,
         es_predefinido=es_predefinido,
-        empresa_id=empresa_id
+        empresa_id=empresa_id_int
     )
 
     nuevo_rol = rol_service.create_rol(db, rol_in)
@@ -70,25 +74,30 @@ def crear_rol(
 @router.put("/{role_id}", response_model=RolResponse)
 def actualizar_rol(
     role_id: int,
-    nombre: Optional[str] = Form(None),
-    descripcion: Optional[str] = Form(None),
-    es_predefinido: Optional[str] = Form(None),
-    empresa_id: Optional[int] = Form(None),
+    nombre: Optional[str] = Form(None, description="Nuevo nombre del rol"),
+    descripcion: Optional[str] = Form(None, description="Nueva descripción del rol"),
+    es_predefinido: Optional[str] = Form(None, description="Indica si el rol es predefinido (Y/N)"),
+    empresa_id: Optional[str] = Form(None, description="ID de la empresa (nulo si es global)"),
     db: Session = Depends(get_db)
 ):
     """
     Actualiza un rol existente (global o empresarial).
     """
+
+    # Manejar el caso de empresa_id vacío
+    empresa_id_int = int(empresa_id) if empresa_id not in (None, "", "null") else None
+
     rol_in = RolUpdate(
         nombre=nombre,
         descripcion=descripcion,
         es_predefinido=es_predefinido,
-        empresa_id=empresa_id
+        empresa_id=empresa_id_int
     )
 
     rol_actualizado = rol_service.update_rol(db, role_id, rol_in)
     if not rol_actualizado:
         raise HTTPException(status_code=404, detail="Rol no encontrado")
+
     return rol_actualizado
 
 
